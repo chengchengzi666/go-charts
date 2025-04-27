@@ -79,6 +79,13 @@ type ChartOption struct {
 	Children []ChartOption
 	// The value formatter
 	ValueFormatter ValueFormatter
+	// 自定义标记点位的参数
+	MarkPointParams []MarkPointParams
+}
+
+type MarkPointParams struct {
+	Index int
+	Name  string
 }
 
 // OptionFunc option function

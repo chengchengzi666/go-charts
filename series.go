@@ -97,6 +97,11 @@ type SeriesMarkData struct {
 	// The mark data type, it can be "max", "min", "average".
 	// The "average" is only for mark line
 	Type string
+	// 自定义标记的参数
+	// x轴索引
+	Index int
+	// 点位名称（例如：异常）
+	Name string
 }
 type SeriesMarkPoint struct {
 	// The width of symbol, default value is 30

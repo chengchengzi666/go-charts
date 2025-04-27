@@ -30,8 +30,8 @@ import (
 	"github.com/wcharczuk/go-chart/v2"
 )
 
-const labelFontSize = 10
-const smallLabelFontSize = 8
+const labelFontSize = 15
+const smallLabelFontSize = 15
 const defaultDotWidth = 2.0
 const defaultStrokeWidth = 2.0
 

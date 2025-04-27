@@ -39,6 +39,25 @@ func NewMarkPoint(markPointTypes ...string) SeriesMarkPoint {
 	}
 }
 
+// NewCustomMarkPoint returns a series mark point
+func NewCustomMarkPoint(params []MarkPointParams) SeriesMarkPoint {
+	var data []SeriesMarkData
+
+	// Iterate over each MarkPointParams
+	for _, param := range params {
+		// For each param, create a SeriesMarkData for each type
+		data = append(data, SeriesMarkData{
+			Index: param.Index,
+			Name:  param.Name,
+		})
+	}
+
+	return SeriesMarkPoint{
+		SymbolSize: 53,
+		Data:       data,
+	}
+}
+
 type markPointPainter struct {
 	p       *Painter
 	options []markPointRenderOption
@@ -71,7 +90,6 @@ func (m *markPointPainter) Render() (Box, error) {
 			continue
 		}
 		points := opt.Points
-		summary := s.Summary()
 		symbolSize := s.MarkPoint.SymbolSize
 		if symbolSize == 0 {
 			symbolSize = 30
@@ -92,16 +110,11 @@ func (m *markPointPainter) Render() (Box, error) {
 		for _, markPointData := range s.MarkPoint.Data {
 			textStyle.FontSize = labelFontSize
 			painter.OverrideTextStyle(textStyle)
-			p := points[summary.MinIndex]
-			value := summary.MinValue
-			switch markPointData.Type {
-			case SeriesMarkDataTypeMax:
-				p = points[summary.MaxIndex]
-				value = summary.MaxValue
-			}
+			p := points[markPointData.Index]
 
 			painter.Pin(p.X, p.Y-symbolSize>>1, symbolSize)
-			text := commafWithDigits(value)
+			// text := commafWithDigits(value)
+			text := markPointData.Name
 			textBox := painter.MeasureText(text)
 			if textBox.Width() > symbolSize {
 				textStyle.FontSize = smallLabelFontSize

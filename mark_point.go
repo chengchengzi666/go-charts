@@ -53,8 +53,7 @@ func NewCustomMarkPoint(params []MarkPointParams) SeriesMarkPoint {
 	}
 
 	return SeriesMarkPoint{
-		SymbolSize: 53,
-		Data:       data,
+		Data: data,
 	}
 }
 
